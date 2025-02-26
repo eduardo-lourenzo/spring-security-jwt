@@ -4,6 +4,7 @@ import br.edu.zup.spring_security_jwt.services.AdminService;
 import br.edu.zup.spring_security_jwt.services.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,9 @@ public class AdminController {
     @GetMapping
     public ResponseEntity<Map<String, String>> getAdmin() {
         AdminService adminService = new AdminService();
-        return adminService.getAdmin(authService.getUser());
+        return new ResponseEntity<>(
+                adminService.getAdmin(authService.getUser()),
+                HttpStatus.OK
+        );
     }
 }

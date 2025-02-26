@@ -10,10 +10,10 @@ import java.util.Map;
 
 @Service
 public class AdminService {
-    public ResponseEntity<Map<String, String>> getAdmin(UserEntity userEntity) {
+    public Map<String, String> getAdmin(UserEntity userEntity) {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Bem-vindo administrador " + userEntity.getName() + "!");
         response.put("department", userEntity.getDepartment());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 }

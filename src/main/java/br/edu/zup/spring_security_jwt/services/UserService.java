@@ -10,10 +10,10 @@ import java.util.Map;
 
 @Service
 public class UserService {
-    public ResponseEntity<Map<String, String>> getUser(UserEntity userEntity) {
+    public Map<String, String> getUser(UserEntity userEntity) {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Bem-vindo usuário " + userEntity.getName() + "!");
         response.put("department", userEntity.getDepartment());
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return response;
     }
 }
