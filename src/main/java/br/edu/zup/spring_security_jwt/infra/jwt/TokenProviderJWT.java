@@ -15,13 +15,18 @@ public class TokenProviderJWT {
     static final long FIVE_MIN_IN_MS = 300000; // 5min => 300s => 300.000ms
     private final String secretKeyJWT = System.getenv("JWT_SECRETKEY");
 
+    // Passar Role e Claim como parâmetros para montar o token
+    // Service de Login Monta o token
+    // As rotas de admin e user não pre checa a autenticação
+    // usar getRoles e getClaim no Token ou BD?
+
     public String generateToken(Authentication authentication) {
-        String userName = authentication.getName();
+        String username = authentication.getName();
         Date currentDate = new Date();
         Date expirationDateInMilliseconds = new Date(currentDate.getTime() + FIVE_MIN_IN_MS);
 
         return Jwts.builder()
-                .subject(userName)
+                .subject(username)
                 .issuedAt(currentDate)
                 .expiration(expirationDateInMilliseconds)
                 .signWith(key())
@@ -32,7 +37,7 @@ public class TokenProviderJWT {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretKeyJWT));
     }
 
-    public String getUserName(String token) {
+    public String getUsername(String token) {
 
         return Jwts.parser()
                 .verifyWith((SecretKey) key())
