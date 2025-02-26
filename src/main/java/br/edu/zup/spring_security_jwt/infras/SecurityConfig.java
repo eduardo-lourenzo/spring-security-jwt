@@ -1,8 +1,8 @@
-package br.edu.zup.spring_security_jwt.infra;
+package br.edu.zup.spring_security_jwt.infras;
 
 
-import br.edu.zup.spring_security_jwt.infra.jwt.AuthenticationEntryPointJWT;
-import br.edu.zup.spring_security_jwt.infra.jwt.AuthenticationFilterJWT;
+import br.edu.zup.spring_security_jwt.infras.jwt.AuthenticationEntryPointJWT;
+import br.edu.zup.spring_security_jwt.infras.jwt.AuthenticationFilterJWT;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;

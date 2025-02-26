@@ -1,4 +1,4 @@
-package br.edu.zup.spring_security_jwt.dto;
+package br.edu.zup.spring_security_jwt.dtos;
 
 import lombok.Data;
 

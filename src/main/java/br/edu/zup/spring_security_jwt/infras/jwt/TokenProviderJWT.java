@@ -1,4 +1,4 @@
-package br.edu.zup.spring_security_jwt.infra.jwt;
+package br.edu.zup.spring_security_jwt.infras.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
