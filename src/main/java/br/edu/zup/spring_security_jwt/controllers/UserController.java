@@ -1,6 +1,5 @@
 package br.edu.zup.spring_security_jwt.controllers;
 
-import br.edu.zup.spring_security_jwt.services.AdminService;
 import br.edu.zup.spring_security_jwt.services.AuthService;
 import br.edu.zup.spring_security_jwt.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
