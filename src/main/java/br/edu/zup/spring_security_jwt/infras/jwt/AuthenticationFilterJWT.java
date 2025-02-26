@@ -40,6 +40,7 @@ public class AuthenticationFilterJWT extends OncePerRequestFilter {
         if (StringUtils.hasText(token) && tokenProvider.validateToken(token)) {
             String username = tokenProvider.getUsername(token);
 
+            // CustomUserDetailsService implements UserDetailsService
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
