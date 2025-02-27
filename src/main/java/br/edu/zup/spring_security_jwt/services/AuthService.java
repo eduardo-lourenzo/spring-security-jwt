@@ -40,16 +40,19 @@ public class AuthService {
         userEntity.setUsername(registerUserDTO.getUsername());
         userEntity.setEmail(registerUserDTO.getEmail());
         userEntity.setPassword(passwordEncoder.encode(registerUserDTO.getPassword()));
+        userEntity.setDepartment(registerUserDTO.getDepartment());
 
         Set<RoleEntity> rolesEntities = registerUserDTO.getRoles()
                 .stream()
-                .map(RoleEntity::new)
+                .map(roleEnum -> roleRepository.findByType(roleEnum)
+                        .orElseGet(() -> roleRepository.save(
+                                new RoleEntity(roleEnum))
+                                // Salva um novo papel que não existe no B.D.
+                        )
+                )
                 .collect(Collectors.toSet());
 
-        roleRepository.saveAll(rolesEntities);
-
         userEntity.setRoles(rolesEntities);
-
         userRepository.save(userEntity);
         return true;
     }
