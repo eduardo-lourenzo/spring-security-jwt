@@ -16,6 +16,9 @@ public class RoleEntity {
     @Column(nullable = false, unique = true)
     private RoleEnum type;
 
+    public RoleEntity() {
+    }
+
     public RoleEntity(RoleEnum type) {
         this.type = type;
     }
