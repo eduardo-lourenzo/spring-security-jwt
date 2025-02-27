@@ -1,5 +1,7 @@
 package br.edu.zup.spring_security_jwt.infras.jwt;
 
+import br.edu.zup.spring_security_jwt.models.RoleEntity;
+import br.edu.zup.spring_security_jwt.models.UserEntity;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 @Component
 public class TokenProviderJWT {
@@ -24,9 +27,16 @@ public class TokenProviderJWT {
         String username = authentication.getName();
         Date currentDate = new Date();
         Date expirationDateInMilliseconds = new Date(currentDate.getTime() + FIVE_MIN_IN_MS);
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         return Jwts.builder()
                 .subject(username)
+                .claim("department", userEntity.getDepartment())
+                .claim("roles", userEntity.getRoles()
+                        .stream()
+                        .map(RoleEntity::getType)
+                        .collect(Collectors.toList())
+                )
                 .issuedAt(currentDate)
                 .expiration(expirationDateInMilliseconds)
                 .signWith(key())
