@@ -61,7 +61,11 @@ public class AuthenticationFilterJWT extends OncePerRequestFilter {
         String bearerToken = request.getHeader("Authorization");
 
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7); // "Bearer " => "0123456"
+            return bearerToken.substring(7);
+            // Remove "Bearer " do início
+            // "Bearer XXX..." = "012345 XXX..." =>
+            // "Bearer_XXX..." = "012345_789..." =>
+            // "XXX..." = "789..."
         }
 
         return null;

@@ -2,6 +2,7 @@ package br.edu.zup.spring_security_jwt.infras.jwt;
 
 import br.edu.zup.spring_security_jwt.models.RoleEntity;
 import br.edu.zup.spring_security_jwt.models.UserEntity;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -18,11 +19,6 @@ public class TokenProviderJWT {
     static final long FIVE_MIN_IN_MS = 300000; // 5min => 300s => 300.000ms
     private final String secretKeyJWT = System.getenv("JWT_SECRETKEY");
 
-    // Passar Role e Claim como parâmetros para montar o token
-    // Service de Login Monta o token
-    // As rotas de admin e user não pre checa a autenticação
-    // usar getRoles e getClaim no Token ou BD?
-
     public String generateToken(Authentication authentication) {
         String username = authentication.getName();
         Date currentDate = new Date();
@@ -31,14 +27,13 @@ public class TokenProviderJWT {
 
         return Jwts.builder()
                 .subject(username)
+                .issuedAt(currentDate)
+                .expiration(expirationDateInMilliseconds)
                 .claim("department", userEntity.getDepartment())
                 .claim("roles", userEntity.getRoles()
                         .stream()
                         .map(RoleEntity::getType)
-                        .collect(Collectors.toList())
-                )
-                .issuedAt(currentDate)
-                .expiration(expirationDateInMilliseconds)
+                        .collect(Collectors.toList()))
                 .signWith(key())
                 .compact();
     }
@@ -65,5 +60,19 @@ public class TokenProviderJWT {
         return true;
     }
 
-    // Refresh Token method
+    public String refreshToken(String token) {
+        Claims claims = Jwts.parser()
+                .verifyWith((SecretKey) key())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+
+        Date newExpirationDate = new Date(System.currentTimeMillis() + FIVE_MIN_IN_MS);
+
+        return Jwts.builder()
+                .claims(claims)
+                .expiration(newExpirationDate)
+                .signWith(key())
+                .compact();
+    }
 }
