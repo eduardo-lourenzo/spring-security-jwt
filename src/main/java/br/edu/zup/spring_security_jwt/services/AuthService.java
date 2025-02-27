@@ -29,9 +29,10 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public void registerUser(RegisterUserDTO registerUserDTO) {
+    public boolean registerUser(RegisterUserDTO registerUserDTO) {
         if (userRepository.existsByUsername(registerUserDTO.getUsername())) {
-            throw new RuntimeException("Unprocess Entity");
+            return false;
+            // throw new RuntimeException("Unprocess Entity");
         }
 
         UserEntity userEntity = new UserEntity();
@@ -50,6 +51,7 @@ public class AuthService {
         userEntity.setRoles(rolesEntities);
 
         userRepository.save(userEntity);
+        return true;
     }
 
     public UserEntity getUser() {
