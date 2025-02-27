@@ -5,6 +5,7 @@ import br.edu.zup.spring_security_jwt.infras.jwt.AuthenticationEntryPointJWT;
 import br.edu.zup.spring_security_jwt.infras.jwt.AuthenticationFilterJWT;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
@@ -19,9 +20,10 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 
-@Component
-@EnableMethodSecurity
 @AllArgsConstructor
+@Component
+@Configuration
+@EnableMethodSecurity
 public class SecurityConfig {
     private UserDetailsService userDetailsService;
     private AuthenticationEntryPointJWT authenticationEntryPoint;
