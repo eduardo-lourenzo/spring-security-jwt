@@ -3,7 +3,6 @@ package br.edu.zup.spring_security_jwt.controllers;
 import br.edu.zup.spring_security_jwt.services.AdminService;
 import br.edu.zup.spring_security_jwt.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,13 +17,14 @@ public class AdminController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private AdminService adminService;
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ResponseEntity<Map<String, String>> getAdmin() {
-        AdminService adminService = new AdminService();
-        return new ResponseEntity<>(
-                adminService.getAdmin(authService.getUser()),
-                HttpStatus.OK
+        return ResponseEntity.ok(
+                adminService.getAdmin(authService.getUser())
         );
     }
 }

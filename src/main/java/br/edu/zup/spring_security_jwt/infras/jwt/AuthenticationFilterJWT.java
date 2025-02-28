@@ -29,6 +29,7 @@ public class AuthenticationFilterJWT extends OncePerRequestFilter {
         this.userDetailsService = userDetailsService;
     }
 
+    // Os parâmetros não são validado e podem ser nulos.
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
