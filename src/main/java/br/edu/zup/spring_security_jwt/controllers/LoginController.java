@@ -1,7 +1,7 @@
 package br.edu.zup.spring_security_jwt.controllers;
 
 import br.edu.zup.spring_security_jwt.dtos.LoginRequestDTO;
-import br.edu.zup.spring_security_jwt.dtos.LoginResponseDTO;
+import br.edu.zup.spring_security_jwt.dtos.TokenResponseDTO;
 import br.edu.zup.spring_security_jwt.services.LoginService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ public class LoginController {
      private LoginService loginService;
 
     @PostMapping
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<TokenResponseDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
          String token = loginService.login(loginRequestDTO);
 
-        LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
-        loginResponseDTO.setAccessToken(token);
+        TokenResponseDTO tokenResponseDTO = new TokenResponseDTO();
+        tokenResponseDTO.setAccessToken(token);
 
-        return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
+        return new ResponseEntity<>(tokenResponseDTO, HttpStatus.OK);
     }
 }
